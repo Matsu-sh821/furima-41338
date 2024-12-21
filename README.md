@@ -11,12 +11,12 @@
 | last_name          | string  | null: false               |
 | first_name_kana    | string  | null: false               |
 | last_name_kana     | string  | null: false               |
-| birth_day          | data    | null: false               |
+| birth_day          | date    | null: false               |
 
 ### Association
 
-- has_many :purchase
-- has_many :item
+- has_many :purchases
+- has_many :items
 
 ## purchases テーブル
 
@@ -50,17 +50,17 @@
 - belongs_to :user
 - has_one :purchase
 
-## address テーブル
+## addresses テーブル
 
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
 | post_code      | string     | null: false                    |
 | prefecture_id  | integer    | null: false                    |
 | city           | string     | null: false                    |
-| block_number   | integer    | null: false                    |
+| block_number   | string     | null: false                    |
 | apartment_name | string     |                                |
 | phone_number   | string     | null: false                    |
-| item_id        | references | null: false, foreign_key: true |
+| purchase_id    | references | null: false, foreign_key: true |
 
 ### Association
 
