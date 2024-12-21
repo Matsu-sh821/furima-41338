@@ -2,92 +2,67 @@
 
 ## users テーブル
 
-| Column          | Type    | Options                   |
-| --------------- | ------- | ------------------------- |
-| nickname        | string  | null: false               |
-| email           | string  | null: false, unique: true |
-| password        | string  | null: false               |
-| first_name      | string  | null: false               |
-| last_name       | string  | null: false               |
-| first_name_kana | string  | null: false               |
-| last_name_kana  | string  | null: false               |
-| first_name_kata | string  | null: false               |
-| last_name_kata  | string  | null: false               |
-| birth_day       | integer | null: false               |
+| Column             | Type    | Options                   |
+| ------------------ | ------- | ------------------------- |
+| nickname           | string  | null: false               |
+| email              | string  | null: false, unique: true |
+| encrypted_password | string  | null: false               |
+| first_name         | string  | null: false               |
+| last_name          | string  | null: false               |
+| first_name_kana    | string  | null: false               |
+| last_name_kana     | string  | null: false               |
+| birth_day          | data    | null: false               |
 
 ### Association
 
-- has_many :purchases
+- has_many :purchase
 - has_many :item
 - has_one :address
 
 ## purchases テーブル
 
-| Column  | Type       | Options                        |
-| ------- | ---------- | ------------------------------ |
-| item_id | references | null: false, foreign_key: true |
-| user_id | references | null: false, foreign_key: true |
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| item   | references | null: false, foreign_key: true |
+| user   | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
-- has_one :item
+- belongs_to :item
+- belongs_to :address
 
 ## items テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | name               | string     | null: false                    |
-| description        | string     | null: false                    |
-| category_id        | references | null: false, foreign_key: true |
-| item_status_id     | integer    | null: false, foreign_key: true |
+| description        | text       | null: false                    |
+| category_id        | integer    | null: false                    |
+| item_status_id     | integer    | null: false                    |
 | delivery_charge_id | integer    | null: false                    |
 | prefecture_id      | integer    | null: false                    |
-| delivery_date_id   | integer    | null: false, foreign_key: true |
+| delivery_date_id   | integer    | null: false                    |
 | price              | integer    | null: false                    |
-| buyer_id           | references | null: false, foreign_key: true |
-| seller_id          | references | null: false, foreign_key: true |
+| user               | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
-- belongs_to :purchases
-- belongs_to :category
-- has_many :item_images
-
-## categories テーブル
-
-| Column | Type   | Options     |
-| ------ | ------ | ----------- |
-| name   | string | null: false |
-
-### Association
-
-- has_many :item
-
-## item_images テーブル
-
-| Column     | Type       | Options                        |
-| ---------- | ---------- | ------------------------------ |
-| item_id    | references | null: false, foreign_key: true |
-| item_image | text       | null: false                    |
-
-### Association
-
-- belongs_to :item
+- has_one :purchase
 
 ## address テーブル
 
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
-| post_code      | integer    | null: false                    |
+| post_code      | string     | null: false                    |
 | prefecture_id  | integer    | null: false                    |
-| city           | references | null: false, foreign_key: true |
-| block_number   | integer    | null: false, foreign_key: true |
-| apartment_name | integer    | null: false                    |
-| phone_number   | integer    | null: false, foreign_key: true |
+| city           | string     | null: false                    |
+| block_number   | integer    | null: false                    |
+| apartment_name | string     |                                |
+| phone_number   | string     | null: false                    |
 | user_id        | references | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :user
+- has_one :purchase
