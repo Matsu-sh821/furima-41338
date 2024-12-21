@@ -17,7 +17,6 @@
 
 - has_many :purchase
 - has_many :item
-- has_one :address
 
 ## purchases テーブル
 
@@ -30,7 +29,7 @@
 
 - belongs_to :user
 - belongs_to :item
-- belongs_to :address
+- has_one :address
 
 ## items テーブル
 
@@ -61,8 +60,8 @@
 | block_number   | integer    | null: false                    |
 | apartment_name | string     |                                |
 | phone_number   | string     | null: false                    |
-| user_id        | references | null: false, foreign_key: true |
+| item_id        | references | null: false, foreign_key: true |
 
 ### Association
 
-- has_one :purchase
+-belongs_to :purchase
