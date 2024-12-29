@@ -15,7 +15,12 @@ RSpec.describe Item, type: :model do
       it 'ユーザー登録している人でないと出品できない' do
         @item.user_id = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include('User must exist', "User can't be blank")
+        expect(@item.errors.full_messages).to include('User must exist')
+      end
+      it 'ユーザーが紐づいていないと出品できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
       it '１枚画像がないと出品できない' do
         @item.image = nil
@@ -96,6 +101,11 @@ RSpec.describe Item, type: :model do
         @item.price = 10_000_000
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
+      end
+      it '価格が半角数字以外の値が含まれていると出品できない' do
+        @item.price = '５００'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
     end
   end
