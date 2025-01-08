@@ -10,6 +10,10 @@ RSpec.describe OrderForm, type: :model do
       it 'すべての値が正しく入力されていれば保存できること' do
         expect(@order_form).to be_valid
       end
+      it '建物の入力が空でも保存できること' do
+        @order_form.apartment_name = nil
+        expect(@order_form).to be_valid
+      end
     end
     context '配送先情報の保存ができないとき' do
       it 'user_idが空だと保存できない' do
@@ -64,6 +68,11 @@ RSpec.describe OrderForm, type: :model do
       end
       it '電話番号が12桁以上あると保存できないこと' do
         @order_form.phone_number = 12_345_678_910_123_111
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid. Please enter numbers only')
+      end
+      it '電話番号が9桁以下だと保存できないこと' do
+        @order_form.phone_number = 123_456_789
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include('Phone number is invalid. Please enter numbers only')
       end

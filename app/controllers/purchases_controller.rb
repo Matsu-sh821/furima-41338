@@ -5,11 +5,9 @@ class PurchasesController < ApplicationController
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_form = OrderForm.new
-    @item = Item.find(params[:item_id])
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(purchase_params)
     if @order_form.valid?
       pay_item
